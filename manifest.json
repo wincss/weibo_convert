@@ -1,0 +1,15 @@
+{
+    "manifest_version": 2,
+    "name": "微博链接转换器",
+    "version": "1.0",
+    "page_action": {
+        "default_title": "切换到电脑版",
+        "default_icon": "weibo.png"
+    },
+    "background": {
+        "scripts": ["convertor.js"]
+    },
+    "permissions" : ["declarativeContent"],
+    "icons": {"128": "weibo.png"},
+    "description": "访问微博手机版时，方便跳转到电脑版"
+}
