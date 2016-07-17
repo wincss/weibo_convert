@@ -1,6 +1,7 @@
 var BASE62 = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
 var URLEX = new RegExp('^http://m.weibo.cn/(\\d+)/(\\d+)[/?#].+');
 var CIDEX = new RegExp('[?#&]cid=(\\d+)(&.*)?$')
+var MEDEX = new RegExp('[?&]id=(\\d+)(&.*)?$')
 
 chrome.pageAction.onClicked.addListener(function(tab){
     var newurl = tab.url;
@@ -19,6 +20,10 @@ chrome.pageAction.onClicked.addListener(function(tab){
         newurl = 'http://weibo.com/' + info[1] + '/' + ret.replace(/^0+/, '');
     }
     info = CIDEX.exec(newurl);
+    if (info) {
+        newurl = 'http://weibo.com/p/' + info[1];
+    }
+    info = MEDEX.exec(newurl);
     if (info) {
         newurl = 'http://weibo.com/p/' + info[1];
     }
@@ -43,6 +48,9 @@ chrome.runtime.onInstalled.addListener(function() {
           }),
           new chrome.declarativeContent.PageStateMatcher({
               pageUrl: { hostEquals: "card.weibo.com" },
+          }),
+          new chrome.declarativeContent.PageStateMatcher({
+              pageUrl: { hostEquals: "media.weibo.cn" },
           })
         ],
         // And shows the extension's page action.
